@@ -1,8 +1,8 @@
 import torch
 from torch import nn as nn
 
-class model(nn.Module):
-    def __init__(self, vocab_size, d_model, n_heads, ff_dim, max_len):
+class MiniTransformer(nn.Module):
+    def __init__(self, vocab_size, d_model=128, n_heads=2, ff_dim=128, max_len=100):
         super().__init__()
 
         #Define token embedding and positional encoding

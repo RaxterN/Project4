@@ -2,13 +2,15 @@ import torch
 from torch import nn as nn
 from torch import optim as optim
 import torch.utils.data as data
-import MiniTransformer as MT
+from MiniTransformer import MiniTransformer
 
 #Load the text from file
-text = ""
+with open("./data.txt", "r", encoding="utf-8") as file:
+    text = file.read()
 
 #Create word-level vocabulary
 words = text.split()
+print(f"Token count: {len(words)}")
 vocab = sorted(list(set(words))) #gets only the unique words
 stoi = {word: i for i, word in enumerate(vocab)} #string to integer dictionary
 itos = {i: word for word, i in stoi.items()} #integer to string dictionary
@@ -29,7 +31,7 @@ inputs = torch.tensor(inputs, dtype=torch.long)
 targets = torch.tensor(targets, dtype=torch.long)
 
 #Create the model
-model = MT(vocab_size = len(vocab))
+model = MiniTransformer(vocab_size = len(vocab))
 loss_func = nn.NLLLoss()
 optimizer = torch.optim.Adam(model.parameters())
 
@@ -70,7 +72,8 @@ def generate(prompt, max_new_tokens=30):
 
     return " ".join(itos[i] for i in prompt_tokens)
 
-if __name__ == "__main__":
-    prompt = "But in these"
-    print("Prompt:", prompt)
-    print("Generation:", generate(prompt, max_new_tokens=20))
+####################################### Interaction Loop
+#Need to change this
+prompt = "Back in my day"
+print("Prompt:", prompt)
+print("Generation:", generate(prompt, max_new_tokens=20))
