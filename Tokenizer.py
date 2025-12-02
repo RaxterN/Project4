@@ -6,8 +6,9 @@ class Tokenizer:
         vocab = sorted(set(cleaned_text)) #this gets a list of unique words in the text
 
         #Get integer->string and string->integer dictionaries for encoding and decoding
-        self.stoi = {}
-        self.itos = {}
+        self.stoi = {word: i for i, word in enumerate(vocab)}
+        self.itos = {i: word for word, i in self.stoi.items()}
+        self.vocab_size = len(self.stoi)
 
     def Clean(self, raw: str):
         """
@@ -18,6 +19,21 @@ class Tokenizer:
         text = text.lower() #just make it all lowercase
         text = text.strip() #remove excess spaces if there are still any
         return text
+    
+    def encode(self, text: str):
+        """
+        Returns the integer id's for any tokens passed in, if they are
+        in the string->integer dict. (self.stoi) made from the original vocabulary
+        """
+        tokens = self.Clean(text)
+        return [self.stoi[token] for token in text if token in self.stoi]
+
+    def decode(self, ids):
+        """
+        Returns the strings if they exist in from the interger->string
+        vocab disctionary (self.itos)
+        """
+        return " ".join(self.itos[id] for id in ids)
 
 
 
