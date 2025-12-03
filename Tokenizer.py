@@ -17,7 +17,7 @@ class Tokenizer:
         """
         text = unicodedata.normalize("NFKC", raw) #collapse weird unicode characters
         text = text.lower() #just make it all lowercase
-        text = text.strip() #remove excess spaces if there are still any
+        text = text.split()
         return text
     
     def encode(self, text: str):
