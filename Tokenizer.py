@@ -2,7 +2,7 @@ import unicodedata
 
 class Tokenizer:
     def __init__(self, raw: str):
-        cleaned_text = self.Clean(raw)
+        cleaned_text = self.clean(raw)
         vocab = sorted(set(cleaned_text)) #this gets a list of unique words in the text
 
         #Get integer->string and string->integer dictionaries for encoding and decoding
@@ -10,7 +10,7 @@ class Tokenizer:
         self.itos = {i: word for word, i in self.stoi.items()}
         self.vocab_size = len(self.stoi)
 
-    def Clean(self, raw: str):
+    def clean(self, raw: str):
         """
         This method just takes the raw text and attempts to clean it up to reduce the 
         vocab size.
@@ -25,8 +25,8 @@ class Tokenizer:
         Returns the integer id's for any tokens passed in, if they are
         in the string->integer dict. (self.stoi) made from the original vocabulary
         """
-        tokens = self.Clean(text)
-        return [self.stoi[token] for token in text if token in self.stoi]
+        tokens = self.clean(text)
+        return [self.stoi[token] for token in tokens if token in self.stoi]
 
     def decode(self, ids):
         """
