@@ -146,14 +146,14 @@ while True:
     elif user_input == "1":
         print("Enter the weights filename.")
         weights_filename = input("> ")
-        Train("./data2.txt", weights_filename, 32, 2)
+        Train("./data.txt", weights_filename, 64, 4)
         print("\n Training run complete.")
     elif user_input == "2":
         print("Enter weights filename to load: (do not include file extension!)")
         weights_filename = input("> ")
         if os.path.exists(f"./{weights_filename}.pth"):
             print("Loading Weights.\n")
-            LoadFromWeights("./data2.txt", f"./{weights_filename}.pth")
+            LoadFromWeights("./data.txt", f"./{weights_filename}.pth")
         elif not os.path.exists(f"./{weights_filename}.pth"):
             print("File not found.\n")
 
