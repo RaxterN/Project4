@@ -1,4 +1,5 @@
 import torch
+import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from torch.optim import  AdamW
 
@@ -10,7 +11,7 @@ def load_dataset(path):
         return f.read()
 
 
-def finetune_hf(dataset_path, save_path, model_name='distilgpt2', epochs=2, lr=5e-5, max_length=128):
+def finetune_hf(dataset_path, save_path, model_name='distilgpt2', epochs=8, lr=5e-5, max_length=128):
     #finetunes a small HuggingFace model on a text dataset
     #loads the model and tokenizer, tokenizes the text, trains for a couple of epochs,
     #and saves the model for later use
@@ -84,14 +85,31 @@ if __name__ == '__main__':
             break
 
         elif choice == '1':
-            dataset = input('Dataset path (e.g., data2.txt): ')
-            save_path = input('Save directory for finetuned model: ')
-            finetune_hf(dataset, save_path)
+            dataset = input('Dataset path (e.g., data2.txt): ').strip()
+            if not os.path.isfile(dataset):
+                print("Error: Dataset file not found.")
+                continue
+            save_path = input('Save directory for finetuned model: ').strip()
+            try:
+                    os.makedirs(save_path)
+            except Exception as e:
+                print(f"Error: Could not create directory '{save_path}'. {e}")
+                continue
+            try:
+                finetune_hf(dataset, save_path)
+            except Exception as e:
+                print("Finetuning failed:", e)
 
         elif choice == '2':
-            model_path = input('Model directory: ')
+            model_path = input('Model directory: ').strip()
+            if not os.path.isdir(model_path):
+                print("Error: Model directory not found.")
+                continue
             prompt = input('Prompt: ')
-            print(generate_hf(prompt, model_path))
+            try:
+                print(generate_hf(prompt, model_path))
+            except Exception as e:
+                print("Generation failed:", e)
 
 ########
 # references
