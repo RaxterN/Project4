@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
         elif choice == '1':
             dataset = input('Dataset path (e.g., data2.txt): ').strip()
-            if not os.path.isfile(dataset):
+            if not os.path.exists(dataset):
                 print("Error: Dataset file not found.")
                 continue
             save_path = input('Save directory for finetuned model: ').strip()
