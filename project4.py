@@ -100,7 +100,7 @@ def Train(data_filepath, weights_filename, batch_size, epochs):
 
     for epoch in range(1, epochs + 1):
         model.train()
-        perm = torch.randperm(inputs.size(0))  # shuffle the examples
+        perm = torch.randperm(inputs.size(0))  #shuffle the examples
         inputs_shuffled = inputs[perm]
         targets_shuffled = targets[perm]
 
@@ -111,7 +111,7 @@ def Train(data_filepath, weights_filename, batch_size, epochs):
             xb = inputs_shuffled[start:end]
             yb = targets_shuffled[start:end]
 
-            logits = model(xb)
+            logits = model(xb) #forward pass
             logits_flat = logits.view(-1, vocab_size)
             targets_flat = yb.view(-1)
 
@@ -146,7 +146,7 @@ while True:
     elif user_input == "1":
         print("Enter the weights filename.")
         weights_filename = input("> ")
-        Train("./data.txt", weights_filename, 64, 4)
+        Train("./data.txt", weights_filename, 64, 8)
         print("\n Training run complete.")
     elif user_input == "2":
         print("Enter weights filename to load: (do not include file extension!)")
