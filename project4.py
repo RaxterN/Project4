@@ -29,8 +29,8 @@ def Generate(tokenizer, model, prompt, response_length):
         #Get probabilities
         probs = fun.softmax(next_logits, dim=-1)
 
-        next_token = torch.multinomial(probs, num_samples=1)  # [1, 1]
-        input_tokens = torch.cat([input_tokens, next_token], dim=1)  # [1, T+1]
+        next_token = torch.multinomial(probs, num_samples=1)
+        input_tokens = torch.cat([input_tokens, next_token], dim=1)
 
     generated_tokens = input_tokens[0].tolist()
     return tokenizer.decode(generated_tokens)
